@@ -2,7 +2,7 @@ import axios from "axios";
 class CoingeckoService {
   isOnline = false;
   async status() {
-    const response = await axios.get('https://api.coingecko.com/api/v3/ping')
+    const response = await axios('https://api.coingecko.com/api/v3/ping')
     if(response.data.hasOwnProperty('gecko_says')) {
       this.isOnline = true;
     }
@@ -19,8 +19,8 @@ class CoingeckoService {
     try {
       // attempt to connect only once 
       await this.connected()
-      const response = await axios.get('https://api.coingecko.com/api/v3/coins/list?include_platform=false')
-      return response.data;
+      const { data } = await axios('https://api.coingecko.com/api/v3/coins/list?include_platform=false')
+      return data;
     } catch(e) {
       return null;
     }
@@ -32,8 +32,8 @@ class CoingeckoService {
     try {
       // attempt to connect only once 
       this.connected()
-      const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=false`)
-      return response.data;
+      const { data } = await axios(`https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=false`)
+      return data;
     } catch(e) {
       return null;
     }

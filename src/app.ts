@@ -1,4 +1,5 @@
 import express, { Response } from 'express'
+import middleware from './middleware';
 import { CoinGeckoController } from './controllers';
 
 const PORT = 3800
@@ -14,10 +15,11 @@ app.get('/health', (_, res: Response) => {
   res.status(200).json({ success: true, message: 'OK', data: null })
 })
 
+// request for coin list from coingecko
+app.get('/list', middleware.getList, CoinGeckoController.GetList)
 
-app.get('/list', CoinGeckoController.GetList)
-
-app.get('/asset/:id',CoinGeckoController.GetItem)
+// request for an asset info from coingecko
+app.get('/asset/:id', middleware.getItem, CoinGeckoController.GetItem)
 
 
 const initApp = () => {
