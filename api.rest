@@ -1,0 +1,7 @@
+get http://localhost:3800/health
+
+###
+get http://localhost:3800/list
+
+###
+get http://localhost:3800/asset/bitcoin
