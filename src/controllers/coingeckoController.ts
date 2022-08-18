@@ -3,7 +3,7 @@ import { coingecko } from '../services'
 
 export default class CoingeckoController {
   static GetList = async (_: Request, res: Response) => {
-    const data = await coingecko.coinList();
+    const data = await coingecko.coinList(); // data could be null 
     return res.status(200).json({ success: true, message: '', data })
   }
   
