@@ -7,11 +7,10 @@ class CoingeckoService {
       this.isOnline = true;
     }
   }
-
+  // check the state of CG API only once after application starts
   async connected() {
     if(!this.isOnline) {
       await this.status();
-      if(!this.isOnline) return null;
     }
   }
 
@@ -19,6 +18,7 @@ class CoingeckoService {
     try {
       // attempt to connect only once 
       await this.connected()
+      if(!this.isOnline) return null
       const { data } = await axios('https://api.coingecko.com/api/v3/coins/list?include_platform=false')
       return data;
     } catch(e) {
@@ -32,6 +32,7 @@ class CoingeckoService {
     try {
       // attempt to connect only once 
       this.connected()
+      if(!this.isOnline) return null
       const { data } = await axios(`https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=false`)
       return data;
     } catch(e) {
